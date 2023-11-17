@@ -1,0 +1,529 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link rel="icon" href="data:,">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+
+
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg text-light" style="background-color: black">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">E-Commerce</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active text-light" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="#">Shop</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            All Products
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item " href="#">Air conditioner</a></li>
+                            <li><a class="dropdown-item " href="#">Gadgets</a></li>
+                            <li><a class="dropdown-item " href="#">Home appliances</a></li>
+                            <li><a class="dropdown-item " href="#">Kitchen appliances</a></li>
+                            <li><a class="dropdown-item " href="#">Today's Deal</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/users/contact}" class="nav-link text-light">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light">About</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="d-flex">
+
+                <a href="/logout" class="dropdown-item">Logout</a>
+
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="d-flex align-items-start">
+    <div class="nav nav-tabs flex-column nav-pills me-3" id="myTab" role="tablist" aria-orientation="vertical">
+        <li class="nav-item">
+            <a class="btn active" id="v-pills-products-tab" data-bs-toggle="pill" href="#v-pills-products" role="tab" aria-controls="v-pills-products" aria-selected="true">
+                <i class="fas fa-shopping-bag"></i> Manage Products
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="btn" id="v-pills-add-products-tab" data-bs-toggle="pill" href="#v-pills-add-products" role="tab" aria-controls="v-pills-add-products" aria-selected="false">
+                <i class="fas fa-plus"></i> Add Products
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="btn" id="v-pills-orders-tab" data-bs-toggle="pill" href="#v-pills-orders" role="tab" aria-controls="v-pills-orders" aria-selected="false">
+                <i class="fas fa-shopping-cart"></i> Manage Orders
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="btn" id="v-pills-ordersReturn-tab" data-bs-toggle="pill" href="#v-pills-ordersReturn" role="tab" aria-controls="v-pills-ordersReturn" aria-selected="false">
+                <i class="fas fa-shopping-cart"></i>Return/Exchange
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="btn" id="v-pills-inventory-tab" data-bs-toggle="pill" href="#v-pills-inventory" role="tab" aria-controls="v-pills-inventory" aria-selected="false">
+                <i class="fas fa-box"></i> Inventory
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="btn" id="v-pills-analytics-tab" data-bs-toggle="pill" href="#v-pills-analytics" role="tab" aria-controls="v-pills-analytics" aria-selected="false">
+                <i class="fas fa-truck"></i> Shipping and Logistics
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="btn" id="v-pills-coupon-tab" data-bs-toggle="pill" href="#v-pills-coupon" role="tab" aria-controls="v-pills-coupon" aria-selected="false">
+                <i class="fas fa-gift"></i> Coupon Generator
+            </a>
+        </li>
+    </div>
+
+<main class="container-fluid" >
+    <div class="tab-content" id="v-pills-tabContent">
+        <div class="tab-pane fade show active" id="v-pills-products" role="tabpanel" aria-labelledby="v-pills-products-tab" tabindex="0">
+            <h2>Manage Products</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Iterate over each product in productData and display the details -->
+                <tr th:each="productDatas: ${info}">
+                    <td th:text="${productDatas.title}"></td>
+                    <td th:text="${productDatas.category}"></td>
+                    <td th:text="${productDatas.quantity}"></td>
+                    <td th:text="${productDatas.price}"></td>
+                    <td>
+                        <a type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalDelete">
+                            Delete
+                        </a>
+                        <div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Do you want to Delete this?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+                                        <a class="btn btn-success" th:href="@{/seller/dashboard/delete/{id}(id=${productDatas.id})}" type="button" >Yes</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                 </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="v-pills-add-products" role="tabpanel" aria-labelledby="v-pills-add-products-tab" tabindex="0">
+            <h2>Add Products</h2>
+            <form th:action="@{/seller/saveForm}"   th:object="${product}" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" aria-describedby="emailHelp"  th:field="*{title}" placeholder="Product Title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="category" class="form-label">Product Category</label>
+                    <select class="form-select" id="category" th:field="*{category}" required>
+                        <option value="" disabled selected>Select a category</option>
+                        <option value="Fruits&Vegetables">Fruits & Vegetables</option>
+                        <option value="Foodgrains&Oil&Masala&Vegetables">Foodgrains, Oil & Masala</option>
+                        <option value="Bakery&Cakes&Dairy">Bakery, Cakes & Dairy</option>
+                        <option value="Beverages">Beverages</option>
+                        <option value="Eggs&Meat&Fish">Eggs, Meat & Fish</option>
+                        <option value="Snacks">Snacks</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" th:field="*{description}" rows="3" placeholder="Product Description" required></textarea>
+                </div>
+
+
+
+                <div class="mb-3">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="number" class="form-control "  id="price" th:field="*{price}" placeholder="Product Price" required>
+                </div>
+                <div class="input-group mb-3">
+                        <label  class="input-group-text btn-bd-primary" for="files">Upload</label>
+                        <input type="file" class="form-control" id="files" multiple="multiple" name="files">
+                </div>
+                <div class="mb-3">
+                        <div class="input-group" >
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Quantity</label>
+                                <input type="number" class="form-control" th:field="*{quantity}"  id="exampleInputEmail1" aria-describedby="emailHelp">
+                            </div>
+                        </div>
+                </div>
+
+                <div class="col-12">
+                        <button class="btn btn-primary" type="submit">Submit form</button>
+                </div>
+            </form>
+        </div>
+        <div class="tab-pane fade" id="v-pills-orders" role="tabpanel" aria-labelledby="v-pills-orders-tab" tabindex="0">
+            <h2>Manage Orders</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Order Number</th>
+                    <th>Customer Name</th>
+                    <th>Order Date</th>
+                    <th>Total Amount</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Example data (replace with dynamic data from backend) -->
+                <tr th:each="purchase :${cart}">
+                    <td th:text="${purchase.id}">#</td>
+                    <td th:text="${purchase.userInfo.username}"></td>
+                    <td th:text="${purchase.orderdate}"></td>
+                    <td th:text="${purchase.totalAmount}"></td>
+                    <td>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newexampleModal">View</button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="newexampleModal" tabindex="-1" aria-labelledby="newexampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="newexampleModalLabel">Order Action</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Content for the new modal -->
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Order Number</th>
+                                                <th>Customer Name</th>
+                                                <th>Order</th>
+                                                <th>Total Amount</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td th:text="${purchase.id}">#</td>
+                                                <td th:text="${purchase.userInfo.username}"></td>
+                                                <td th:text="${purchase.productNames}"></td>
+                                                <td th:text="${purchase.totalAmount}"></td>
+
+                                            </tr>
+                                            <!-- Add more rows for additional actions on the same order -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Add more rows for each order -->
+                </tbody>
+            </table>
+
+
+        </div>
+        <div class="tab-pane fade" id="v-pills-inventory" role="tabpanel" aria-labelledby="v-pills-inventory-tab">
+            <h2>Inventory</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr >
+                </thead>
+                <tbody>
+
+                <tr th:each="productDatas: ${info}">
+                    <td th:text="${productDatas.title}"></td>
+                    <td th:text="${productDatas.quantity}"></td>
+                    <td th:text="${productDatas.price}"></td>
+
+                </tr>
+                <!-- Add more rows for each product in inventory -->
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="v-pills-analytics" role="tabpanel" aria-labelledby="v-pills-analytics-tab">
+            <h2>Shipping and Logistics</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Address</th>
+                    <th>Logistics Details</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="purchase :${cart}">
+                <td th:text="${purchase.id}"></td>
+                    <td th:text="${purchase.productNames}"></td>
+                    <td th:text="${purchase.totalItems}"> </td>
+                    <td th:text="${purchase.userInfo.addressLine1}"> </td>
+                    <td><a href="#" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal">View Details</a>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h2>Logistics Details for Order </h2>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="form-control"  th:action="@{/seller/create-shipment}" method="post" >
+                                                <div class="form-group">
+                                                    <div class="mb-3">
+                                                        <label for="trackingNumber" class="form-label">Tracking Number</label>
+                                                        <input type="text" class="form-control" name="trackingNumber" id="trackingNumber" >
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="carrier" class="form-label">Carrier</label>
+                                                        <input type="text" class="form-control"  name="carrier" id="carrier" value="XYZ Shipping">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="estimatedDelivery" class="form-label">Estimated Delivery</label>
+                                                        <input type="date" class="form-control" name="estimatedDelivery" id="estimatedDelivery" >
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="status" class="form-label">Status</label>
+                                                        <select class="form-select" id="status" name="status">
+                                                            <option value="PROCESSING">Processing</option>
+                                                            <option value="SHIPPED">Shipped</option>
+                                                            <option value="OUT_FOR_DELIVERY">Out for Delivery</option>
+                                                            <option value="DELIVERED">Delivered</option>
+                                                            <option value="DELAYED">Delayed</option>
+                                                            <option value="CANCELLED">Cancelled</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="deliveryAddress" class="form-label">Delivery Address</label>
+                                                        <textarea class="form-control" id="deliveryAddress" name="deliveryAddress"  rows="3">123 Main St, City, Country</textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                                    </div>
+                                                </div>
+                                        </form>
+                                    </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                    </td>
+                </tbody>
+            </table>
+
+        </div>
+                        </div>
+        <div class="tab-pane fade" id="v-pills-coupon" role="tabpanel" aria-labelledby="v-pills-coupon-tab">
+            <h2>Generate Coupons</h2>
+            <div class="container mt-5">
+                <form th:object="${coupon}" th:action="@{/seller/generate-coupon}" method="post">
+                    <div class="form-group">
+                        <label for="couponCode">Coupon Code:</label>
+                        <input type="text" id="couponCode" th:field="*{couponCode}" class="form-control" placeholder="Enter coupon code">
+                    </div>
+                    <div class="form-group">
+                        <label for="discountPercentage">Discount Percentage:</label>
+                        <input type="number" id="discountPercentage" th:field="*{discountPercentage}" class="form-control" placeholder="Enter discount percentage">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Generate Coupon</button>
+                </form>
+            </div>
+
+
+        </div>
+        <div class="tab-pane fade" id="v-pills-ordersReturn" role="tabpanel" aria-labelledby="v-pills-ordersReturn-tab">
+            <div class="container mt-4">
+                <h2>Return and Exchange Requests</h2>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Request ID</th>
+                        <th>User Name</th>
+                        <th>Email</th>
+                        <th>Description</th>
+                        <th>Reason</th>
+                        <th>Proof</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Actions</th> <!-- Added Actions column -->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Example table rows (Replace with dynamic data) -->
+                    <tr th:each="request:${order}">
+                        <td th:text="${request.id}" ></td>
+                        <td th:text="${request.name}"></td>
+                        <td th:text="${request.email}"></td>
+                        <td th:text="${request.complaintMessage}"></td>
+                        <td th:text="${request.reason}"> </td>
+                        <td >
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#customModal">
+                                View
+                            </button>
+
+                            <!-- Modal with a custom ID -->
+                            <div class="modal fade" id="customModal" tabindex="-1" aria-labelledby="customModalLabel" aria-hidden="true">
+                                <div class="modal-dialog  modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="customModalLabel">view Proof</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <h2>All Images</h2>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div th:each="request : ${order}" class="col-md-4">
+                                                        <div class="card mb-4">
+                                                            <div class="card-header">
+                                                                <h5 class="card-title" th:text="${request.name}"></h5>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <p class="card-text" th:text="${request.complaintMessage}"></p>
+                                                            </div>
+                                                            <div class="card-footer">
+                                                                <div class="modal-body">
+                                                                    <div th:each="image, imageIndex : ${request.orderimages}">
+                                                                        <img th:src="@{/seller/return/{returnId}/image/{imageIndex}(returnId=${request.id}, imageIndex=${imageIndex.index})}" alt="Image">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td>
+            </td>
+                        <td th:text="${request.totalAmount}"> </td>
+                        <td th:text="${request.status}"><span class="badge badge-warning"></span></td>
+                        <td>
+                            <div class="btn-group">
+                                <a th:href="@{/seller/order-returns/approve/{id}(id=${request.id})}" method="post">
+                                    <button type="submit" class="btn btn-success">Approve</button>
+                                </a>
+                            </div>
+
+
+                            <div class="btn-group">
+                                <a th:href="@{/seller/order-returns/reject/{id}(id=${request.id})}" method="post">
+                                    <button type="submit" class="btn btn-danger">Reject</button>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
+            </div>
+    </div>
+</main>
+</div>
+
+
+<script th:inline="javascript">
+    $(document).ready(function () {
+        $(".minus-btn").click(function () {
+            var productId = $(this).data("product-id");
+            var quantityInput = $("#quantity-" + productId);
+            var currentQuantity = parseInt(quantityInput.val());
+
+            if (currentQuantity > 1) {
+                updateQuantity(productId, currentQuantity - 1);
+            }
+        });
+
+        $(".plus-btn").click(function () {
+            var productId = $(this).data("product-id");
+            var quantityInput = $("#quantity-" + productId);
+            var currentQuantity = parseInt(quantityInput.val());
+
+            updateQuantity(productId, currentQuantity + 1);
+        });
+
+        function updateQuantity(productId, newQuantity) {
+            $.ajax({
+                type: "POST",
+                url: "/sellers/updateQuantity", // Update this URL to the correct endpoint
+                data: {
+                    productId: productId,
+                    newQuantity: newQuantity
+                },
+                success: function () {
+                    var quantityInput = $("#quantity-" + productId);
+                    quantityInput.val(newQuantity);
+                },
+                error: function () {
+                    alert("An error occurred while updating the quantity.");
+                }
+            });
+        }
+    });
+
+
+
+</script>
+
+</body>
+</html>
